@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 import { connect } from 'react-redux';
-import { setTasks } from '../store/actions/main';
+import { getTasks } from '../store/actions/main';
 
 import {useEffect, useState} from "react";
 import Loading from '../components/utils/Loading';
@@ -30,12 +30,16 @@ const deleteTask = (self, id) => {
   })
 }
 
+function Home(props) {
+  const { loading, tasks } = props;
 
-const Home = () => {
+  console.log('props: ', props)
+
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [todo, setTodo] = useState('');
 
+  /*
   let loadTodos = () => {
     fetch('/api/list').then(res => res.json()).then(data => {
       setData(data);
@@ -43,10 +47,12 @@ const Home = () => {
       setLoading(false);
     })
   }
+  */
 
   useEffect(() => {
-    setLoading(true)
-    loadTodos()
+    //setLoading(true)
+    //loadTodos()
+    props.getTasks();
   }, []);
 
   return (
@@ -62,7 +68,7 @@ const Home = () => {
         </h1>
 
         <div className="grid">
-          {data.results ? data.results.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>) : <Loading/>}
+          {loading ? <Loading /> : tasks/*.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>)*/}
         </div>
       </main>
 
@@ -185,13 +191,13 @@ const Home = () => {
   )
 }
 
+
 const mapStateToProps = state => ({
   tasks: state.tasks,
 })
 
-const mapDispatchToProps = dispatch => ({
-  setTasks
-  //setTasks: tasks => dispatch(setTasks(tasks)),
-})
+const mapDispatchToProps = {
+  getTasks
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

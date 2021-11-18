@@ -1,5 +1,3 @@
-import {url, cfAccessKey} from '../../config/app.config';
-
 export default (request, response) => {
     if (!request.query.title){
         return response.status(400).json({
@@ -18,11 +16,11 @@ export default (request, response) => {
         isCompleted: false
     };
 
-    fetch(`${url}/tasks`, {
+    fetch(`${process.env.CRUDFUL_URL}/tasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            cfAccessKey
+            cfAccessKey: process.env.CRUDFUL_API_KEY
         },
         body: JSON.stringify(todoItem)
     })

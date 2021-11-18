@@ -1,13 +1,15 @@
 import * as t from '../types';
 
 const main = (state = {
-    tasks: [{d: 'örnek veri'}]
+    tasks: [],
+    loading: true
 }, action) => {
     switch (action.type) {
         case t.SET_TASKS:
+            console.log('action: ', action)
             return {
                 ...state,
-                tasks: [...state.tasks, action.payload]
+                tasks: action.payload
             };
         case t.ADD_TASK:
             return {
@@ -20,7 +22,9 @@ const main = (state = {
                 tasks: state.tasks.filter(task => task.id !== action.payload)
             };
         default:
-            return state;
+            return {
+                ...state
+            };
     }
 }
 

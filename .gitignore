@@ -29,4 +29,4 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-/config/app.config.js
+next.config.js

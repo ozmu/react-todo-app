@@ -1,15 +1,13 @@
-import {url, cfAccessKey} from '../../config/app.config';
-
 export default (request, response) => {
     if (!request.body.id){
         return response.status(400).json({
             error: 'id is required'
         });
     }
-    fetch(url + 'tasks/' + request.body.id, {
+    fetch(process.env.CRUDFUL_URL + 'tasks/' + request.body.id, {
         method: 'DELETE',
         headers: {
-            cfAccessKey
+            cfAccessKey: process.env.CRUDFUL_API_KEY
         }
     })
     .then(data => {

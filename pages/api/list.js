@@ -1,10 +1,8 @@
-import {url, cfAccessKey} from '../../config/app.config';
-
 export default (request, response) => {
-    return fetch(url + 'tasks', {
+    return fetch(process.env.CRUDFUL_URL + 'tasks', {
         method: 'GET',
         headers: {
-            cfAccessKey
+            cfAccessKey: process.env.CRUDFUL_API_KEY
         }
     })
     .then(res => res.json())
