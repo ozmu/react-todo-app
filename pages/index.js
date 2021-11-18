@@ -1,10 +1,11 @@
 import Head from 'next/head'
+
+import { connect } from 'react-redux';
+import { setTasks } from '../store/actions/main';
+
 import {useEffect, useState} from "react";
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
-
-import { useDispatch } from 'react-redux';
-import {addTask} from '../store/reducers/tasksSlice';
 
 const deleteTask = (self, id) => {
   fetch('/api/delete', {
@@ -30,7 +31,7 @@ const deleteTask = (self, id) => {
 }
 
 
-export default () => {
+const Home = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [todo, setTodo] = useState('');
@@ -183,3 +184,14 @@ export default () => {
     </div>
   )
 }
+
+const mapStateToProps = state => ({
+  tasks: state.tasks,
+})
+
+const mapDispatchToProps = dispatch => ({
+  setTasks
+  //setTasks: tasks => dispatch(setTasks(tasks)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
