@@ -1,16 +1,19 @@
 export default (props) => {
     return (
         <>
-            <a href="https://nextjs.org/docs" className="card">
+            <div className="card">
                 <h3>{props.task.title}</h3>
                 <p>{props.task.details}</p>
-            </a>
+                <div className="card-action">
+                    <button className="btn btn-danger" onClick={() => props.deleteTask(this, props.task.id)}>Delete</button>
+                </div>
+            </div>
             <style jsx>
                 {`
 
             .card {
                 margin: 1rem;
-                flex-basis: 45%;
+                flex-basis: 100%;
                 padding: 1.5rem;
                 text-align: left;
                 color: inherit;

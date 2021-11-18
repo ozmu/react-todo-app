@@ -1,8 +1,33 @@
 import Head from 'next/head'
 import {useEffect, useState} from "react";
+import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
 
-export default function Home() {
+const deleteTask = (self, id) => {
+  fetch('/api/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({id}),
+  })
+  .then(res => res.json()).
+  then(data => {
+    if (data.error){
+      alert(data.error);
+    }
+    else {
+      alert(data.message);
+      const arr = [...self.state.tasks];
+      const index = arr.findIndex(task => task.id === id);
+      arr.splice(index, 1);
+      this.setState({tasks: arr});
+    }
+  })
+}
+
+
+export default () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [todo, setTodo] = useState('');
@@ -19,28 +44,20 @@ export default function Home() {
     loadTodos()
   }, []);
 
-  const exampleTask = {
-    title: 'Örnek Task',
-    details: 'Örnek task içerikkk'
-  }
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Awesome Todo App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Learn <a href="https://nextjs.org">Next.js!</a>
+          Awesome Todo App
         </h1>
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
         <div className="grid">
-          {data.results ? data.results.map((task, idx) => <Task key={idx} task={task}/>) : null}
+          {data.results ? data.results.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>) : <Loading/>}
         </div>
       </main>
 
