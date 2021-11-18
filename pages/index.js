@@ -68,7 +68,7 @@ function Home(props) {
         </h1>
 
         <div className="grid">
-          {loading ? <Loading /> : tasks/*.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>)*/}
+          {loading ? <Loading /> : tasks.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>)}
         </div>
       </main>
 
@@ -193,7 +193,7 @@ function Home(props) {
 
 
 const mapStateToProps = state => ({
-  tasks: state.tasks,
+  tasks: state.main.tasks,
 })
 
 const mapDispatchToProps = {
