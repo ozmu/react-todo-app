@@ -18,6 +18,7 @@ const deleteTask = (self, id) => {
     }
     else {
       alert(data.message);
+      console.log(data);
       const arr = [...self.state.tasks];
       const index = arr.findIndex(task => task.id === id);
       arr.splice(index, 1);
