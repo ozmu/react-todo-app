@@ -3,6 +3,9 @@ import {useEffect, useState} from "react";
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
 
+import { useDispatch } from 'react-redux';
+import {addTask} from '../store/reducers/tasksSlice';
+
 const deleteTask = (self, id) => {
   fetch('/api/delete', {
     method: 'POST',
@@ -18,7 +21,6 @@ const deleteTask = (self, id) => {
     }
     else {
       alert(data.message);
-      console.log(data);
       const arr = [...self.state.tasks];
       const index = arr.findIndex(task => task.id === id);
       arr.splice(index, 1);
@@ -36,6 +38,7 @@ export default () => {
   let loadTodos = () => {
     fetch('/api/list').then(res => res.json()).then(data => {
       setData(data);
+      //useDispatch(addTask(data));
       setLoading(false);
     })
   }
