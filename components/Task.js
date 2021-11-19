@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 import Modal from '../components/utils/Modal';
-import { updateTask, deleteTask } from '../store/actions/main';
+import { changeTaskStatus, updateTask, deleteTask } from '../store/actions/main';
 
 function Task(props){
     const [show, setShow] = useState(false);
@@ -15,6 +15,13 @@ function Task(props){
     const handleDetailsChange = (e) => setDetails(e.target.value);
     const [date, setDate] = useState(new Date(props.task.due).toISOString());
     const handleDateChange = (e) => setDate(e.toISOString());
+
+    const [isCompleted, setIsCompleted] = useState(props.task.isCompleted);
+
+    const handleIsCompletedChange = () => {
+        props.changeTaskStatus(props.task);
+        setIsCompleted(!isCompleted)
+    };
     const updateTask = () => {
         props.updateTask({
             id: props.task.id,
@@ -36,6 +43,7 @@ function Task(props){
                 <h3>{props.task.title}</h3>
                 <p>{props.task.details}</p>
                 <div className="card-action">
+                    <Button variant="info" onClick={handleIsCompletedChange}>{isCompleted ? 'incomplete' : 'complete'}</Button>
                     <Button variant="info" onClick={handleShow}>Edit</Button>
                     <Button variant="danger" onClick={handleDeleteTask}>Delete</Button>
                     <Modal
@@ -97,7 +105,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    updateTask, deleteTask
+    changeTaskStatus, updateTask, deleteTask
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);

@@ -28,6 +28,21 @@ export const addTask = (task) => dispatch => {
     })
 }
 
+export const changeTaskStatus = (task) => dispatch => {
+    axios.patch(url + 'tasks/' + task.id, {isCompleted: !task.isCompleted}).then(response => {
+        if (response.status === 200){
+            dispatch({type: t.UPDATE_TASK, payload: response.data});
+        }
+    }).catch(e => {
+        if (e.response.status === 400){
+            alert('Invalid request body');
+        }
+        else if (e.response.status === 404){
+            alert('Task not found');
+        }        
+    })
+}
+
 export const updateTask = (task) => dispatch => {
     axios.put(url + 'tasks/' + task.id, task).then(response => {
         if (response.status === 200){
