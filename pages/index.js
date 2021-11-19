@@ -1,8 +1,5 @@
-import Head from 'next/head'
 import { useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Modal from '../components/utils/Modal';
 import { getTasks, addTask } from '../store/actions/main';
@@ -37,39 +34,60 @@ function Home(props) {
   }, []);
 
   return (
-    <div className="container">
-      <Head>
-        <title>Awesome Todo App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Awesome Todo App
-        </h1>
-
-        <div className="new">
-          <Button variant="primary" className="btn btn-round btn-icon btn-lg btn-primary newBtn" onClick={handleShow}>
-            <em className="icon ni ni-plus"></em>
-          </Button>
-          <Modal
-          show={show}
-          handleShow={handleShow}
-          title={title}
-          handleTitleChange={handleTitleChange}
-          details={details}
-          handleDetailsChange={handleDetailsChange}
-          date={date}
-          handleDateChange={handleDateChange}
-          handleClose={handleClose}
-          submit={createTask}
-          ></Modal>
+    <div className="container-fluid">
+      <div className="nk-content-inner">
+        <div className="nk-content-body">
+          <div className="nk-block-head nk-block-head-sm">
+            <div className="nk-block-head-content">
+              <h3 className="nk-block-title fw-normal">Task Lists</h3>
+              <div className="nk-block-des text-soft"><p>You have total 95 lists.</p></div>
+            </div>
+          </div>
+          <div className="nk-block">
+            <div className="row g-gs">
+              <div className="col-sm-6 col-lg-4 col-xxl-3">
+                <div className="card h-100">
+                  <div className="card-inner">
+                      <div className="project">
+                        <div className="project-head">
+                            <a href="/demo2/apps-kanban.html" className="project-title">
+                              <div className="user-avatar sq bg-purple"><span>DD</span></div>
+                              <div className="project-info">
+                                  <h6 className="title">Dashlite Development</h6>
+                                  <span className="sub-text"><span className="badge badge-dim badge-warning"><em className="icon ni ni-clock"></em><span>5 Days Left</span></span></span>
+                              </div>
+                            </a>
+                            <div className="drodown">
+                              <a href="#" className="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 mr-n1" data-toggle="dropdown" aria-expanded="false"><em className="icon ni ni-more-h"></em></a>
+                              <div className="dropdown-menu dropdown-menu-right" >
+                                  <ul className="link-list-opt no-bdr">
+                                    <li><a href="/demo2/apps-kanban.html"><em className="icon ni ni-eye"></em><span>View Project</span></a></li>
+                                    <li><a href="#"><em className="icon ni ni-edit"></em><span>Edit Project</span></a></li>
+                                    <li><a href="#"><em className="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
+                                  </ul>
+                              </div>
+                            </div>
+                        </div>
+                        <div className="project-details">
+                            <p>Design and develop the DashLite template for Envato Marketplace.</p>
+                        </div>
+                        <div className="project-progress">
+                            <div className="project-progress-details">
+                              <div className="project-progress-task"><em className="icon ni ni-check-round-cut"></em><span>3 Tasks</span></div>
+                              <div className="project-progress-percent">93.5%</div>
+                            </div>
+                            <div className="progress progress-pill progress-md bg-light">
+                              <div className="progress-bar" data-progress="93.5" ></div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="grid">
-          {loading ? <Loading /> : tasks.map((task, idx) => <Task key={idx} task={task}/>)}
-        </div>
-      </main>
+      </div>
     </div>
   )
 }
