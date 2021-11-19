@@ -2,7 +2,7 @@ import * as t from '../types';
 
 const main = (state = {
     tasks: [],
-    loading: true
+    loading: false
 }, action) => {
     switch (action.type) {
         case t.SET_TASKS:
@@ -13,7 +13,7 @@ const main = (state = {
         case t.ADD_TASK:
             return {
                 ...state,
-                tasks: [...state.tasks, action.payload]
+                tasks: [action.payload, ...state.tasks]
             }
         case t.REMOVE_TASK:
             return {
