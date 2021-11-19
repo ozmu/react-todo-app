@@ -10,8 +10,6 @@ import { getTasks, addTask } from '../store/actions/main';
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
 
-import '../styles/index.module.css';
-
 function Home(props) {
   const { loading, tasks } = props;
 
@@ -51,7 +49,9 @@ function Home(props) {
         </h1>
 
         <div className="new">
-          <Button variant="primary" onClick={handleShow}>New</Button>
+          <Button variant="primary" className="btn btn-round btn-icon btn-lg btn-primary newBtn" onClick={handleShow}>
+            <em className="icon ni ni-plus"></em>
+          </Button>
           <Modal
           show={show}
           handleShow={handleShow}
