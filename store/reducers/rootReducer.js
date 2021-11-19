@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import main from './main';
+import list from './list';
 
 const rootReducer = combineReducers({
-    main
+    main,
+    list
 })
 
 export default rootReducer;
