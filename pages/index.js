@@ -1,12 +1,10 @@
 import Head from 'next/head'
 import { useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Datetime from 'react-datetime';
-import "react-datetime/css/react-datetime.css";
 
-
+import Modal from '../components/utils/Modal';
 import { getTasks, addTask } from '../store/actions/main';
 
 import Loading from '../components/utils/Loading';
@@ -54,33 +52,18 @@ function Home(props) {
 
         <div className="new">
           <Button variant="primary" onClick={handleShow}>New</Button>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>New Task</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Task title</Form.Label>
-                  <Form.Control type="text" value={title} onChange={handleTitleChange} placeholder="Enter task title"/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Details</Form.Label>
-                  <Form.Control as="textarea" value={details} onChange={handleDetailsChange} rows={3} placeholder="Details"/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formDatetime">
-                  <Form.Label>Due Date</Form.Label>
-                  <Datetime value={date} onChange={handleDateChange}/>
-                </Form.Group>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>Close</Button>
-              <Button variant="primary" onClick={createTask}>Save</Button>
-            </Modal.Footer>
-          </Modal>
+          <Modal
+          show={show}
+          handleShow={handleShow}
+          title={title}
+          handleTitleChange={handleTitleChange}
+          details={details}
+          handleDetailsChange={handleDetailsChange}
+          date={date}
+          handleDateChange={handleDateChange}
+          handleClose={handleClose}
+          submit={createTask}
+          ></Modal>
         </div>
 
         <div className="grid">

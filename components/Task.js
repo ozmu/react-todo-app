@@ -1,11 +1,55 @@
-export default (props) => {
+import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import { useState } from 'react';
+
+import Modal from '../components/utils/Modal';
+import { updateTask, deleteTask } from '../store/actions/main';
+
+function Task(props){
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [title, setTitle] = useState(props.task.title);
+    const handleTitleChange = (e) => setTitle(e.target.value);
+    const [details, setDetails] = useState(props.task.details);
+    const handleDetailsChange = (e) => setDetails(e.target.value);
+    const [date, setDate] = useState(new Date(props.task.due).toISOString());
+    const handleDateChange = (e) => setDate(e.toISOString());
+    const updateTask = () => {
+        props.updateTask({
+            id: props.task.id,
+            title,
+            details,
+            due: date,
+            isCompleted: false
+        });
+        handleClose();
+    }
+
+    const handleDeleteTask = () => {
+        props.deleteTask(props.task.id);
+    }
+
     return (
         <>
             <div className="card">
                 <h3>{props.task.title}</h3>
                 <p>{props.task.details}</p>
                 <div className="card-action">
-                    <button className="btn btn-danger" onClick={() => props.deleteTask(this, props.task.id)}>Delete</button>
+                    <Button variant="info" onClick={handleShow}>Edit</Button>
+                    <Button variant="danger" onClick={handleDeleteTask}>Delete</Button>
+                    <Modal
+                    show={show}
+                    handleShow={handleShow}
+                    title={title}
+                    handleTitleChange={handleTitleChange}
+                    details={details}
+                    handleDetailsChange={handleDetailsChange}
+                    date={date}
+                    handleDateChange={handleDateChange}
+                    handleClose={handleClose}
+                    submit={updateTask}
+                    ></Modal>
                 </div>
             </div>
             <style jsx>
@@ -45,3 +89,15 @@ export default (props) => {
         </>
     )
 }
+
+
+const mapStateToProps = state => ({
+    //tasks: state.main.tasks,
+    //loading: state.main.loading
+})
+
+const mapDispatchToProps = {
+    updateTask, deleteTask
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Task);
