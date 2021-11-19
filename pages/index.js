@@ -1,57 +1,25 @@
 import Head from 'next/head'
-
+import { useEffect, useState } from "react";
 import { connect } from 'react-redux';
+import { Button, Modal, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import { getTasks } from '../store/actions/main';
 
-import {useEffect, useState} from "react";
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
 
-const deleteTask = (self, id) => {
-  fetch('/api/delete', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({id}),
-  })
-  .then(res => res.json()).
-  then(data => {
-    if (data.error){
-      alert(data.error);
-    }
-    else {
-      alert(data.message);
-      const arr = [...self.state.tasks];
-      const index = arr.findIndex(task => task.id === id);
-      arr.splice(index, 1);
-      this.setState({tasks: arr});
-    }
-  })
-}
+import '../styles/index.module.css';
 
 function Home(props) {
   const { loading, tasks } = props;
+  const [show, setShow] = useState(false);
 
-  console.log('props: ', props)
-
-  const [data, setData] = useState([]);
-  //const [loading, setLoading] = useState(false);
-  const [todo, setTodo] = useState('');
-
-  /*
-  let loadTodos = () => {
-    fetch('/api/list').then(res => res.json()).then(data => {
-      setData(data);
-      //useDispatch(addTask(data));
-      setLoading(false);
-    })
-  }
-  */
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
-    //setLoading(true)
-    //loadTodos()
     props.getTasks();
   }, []);
 
@@ -67,126 +35,36 @@ function Home(props) {
           Awesome Todo App
         </h1>
 
+        <div className="new">
+          <Button variant="primary" onClick={handleShow}>New</Button>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>New Task</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Task title</Form.Label>
+                  <Form.Control type="text" placeholder="Enter task title"/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Details</Form.Label>
+                  <Form.Control as="textarea" rows={3} placeholder="Details"/>
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>Close</Button>
+              <Button variant="primary">Save</Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+
         <div className="grid">
-          {loading ? <Loading /> : tasks.map((task, idx) => <Task key={idx} task={task} deleteTask={deleteTask}/>)}
+          {loading ? <Loading /> : tasks.map((task, idx) => <Task key={idx} task={task}/>)}
         </div>
       </main>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   )
 }
@@ -194,6 +72,7 @@ function Home(props) {
 
 const mapStateToProps = state => ({
   tasks: state.main.tasks,
+  loading: state.main.loading
 })
 
 const mapDispatchToProps = {

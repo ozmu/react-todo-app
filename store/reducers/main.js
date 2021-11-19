@@ -6,7 +6,6 @@ const main = (state = {
 }, action) => {
     switch (action.type) {
         case t.SET_TASKS:
-            console.log('action: ', action)
             return {
                 ...state,
                 tasks: action.payload
@@ -20,6 +19,11 @@ const main = (state = {
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.id !== action.payload)
+            };
+        case t.LOADING:
+            return {
+                ...state,
+                loading: action.payload
             };
         default:
             return {
