@@ -9,10 +9,13 @@ function Task(props){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     const [title, setTitle] = useState(props.task.title);
     const handleTitleChange = (e) => setTitle(e.target.value);
+
     const [details, setDetails] = useState(props.task.details);
     const handleDetailsChange = (e) => setDetails(e.target.value);
+    
     const [date, setDate] = useState(new Date(props.task.due).toISOString());
     const handleDateChange = (e) => setDate(e.toISOString());
 
