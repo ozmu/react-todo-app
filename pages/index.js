@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { getLists } from '../store/actions/list';
+import { getTasks } from '../store/actions/tasks';
 import Loading from '../components/utils/Loading';
 import ListItem from '../components/ListItem';
 
 function Home(props) {
-  const { loading, count, listItems } = props;
+  const { loading, count, tasks, listItems } = props;
 
   useEffect(() => {
-    props.getLists();
+    props.getTasks();
   }, []);
 
   return (
@@ -34,13 +34,14 @@ function Home(props) {
 
 
 const mapStateToProps = state => ({
-  loading: state.list.loading,
-  count: state.list.count,
-  listItems: state.list.items
+  loading: state.tasks.loading,
+  count: state.tasks.count,
+  tasks: state.tasks.tasks,
+  listItems: state.tasks.lists
 })
 
 const mapDispatchToProps = {
-  getLists
+  getTasks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

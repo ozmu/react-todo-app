@@ -1,13 +1,6 @@
-import { connect } from 'react-redux';
-import { useEffect } from 'react';
 import moment from 'moment';
-import { getLists } from '../store/actions/list';
 
 const List = props => {
-
-    useEffect(() => {
-        props.getLists();
-    }, []);
     return (
         <div className="col-sm-6 col-lg-4 col-xxl-3">
             <div className="card h-100">
@@ -51,12 +44,4 @@ const List = props => {
     )
 }
 
-const mapStateToProps = state => ({
-    lists: state.list.items
-})
-
-const mapDispatchToProps = {
-    getLists
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default List;
