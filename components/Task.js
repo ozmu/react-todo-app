@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import moment from 'moment';
 
-import Modal from './utils/TaskModal';
+import TaskModal from './utils/TaskModal';
 import { changeTaskStatus, updateTask, deleteTask } from '../store/actions/tasks';
 
 function Task(props){
@@ -76,6 +76,18 @@ function Task(props){
                     </li>
                 </ul>
             </div>
+            <TaskModal
+            show={show}
+            handleShow={handleShow}
+            title={title}
+            handleTitleChange={handleTitleChange}
+            details={details}
+            handleDetailsChange={handleDetailsChange}
+            date={date}
+            handleDateChange={handleDateChange}
+            handleClose={handleClose}
+            submit={updateTask}
+            ></TaskModal>
         </div>
     )
 }
