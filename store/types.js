@@ -1,7 +1,7 @@
 export const LOADING = 'LOADING';
 
-//export const SET_LISTS = 'SET_LISTS';
-//export const SET_LIST_COUNT = 'SET_LIST_COUNT';
+export const SET_LISTS = 'SET_LISTS';
+export const SET_LIST_COUNT = 'SET_LIST_COUNT';
 
 
 export const SET_TASKS = 'SET_TASKS';

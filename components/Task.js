@@ -15,7 +15,7 @@ function Task(props){
 
     const [details, setDetails] = useState(props.task.details);
     const handleDetailsChange = (e) => setDetails(e.target.value);
-    
+
     const [date, setDate] = useState(new Date(props.task.due).toISOString());
     const handleDateChange = (e) => setDate(e.toISOString());
 
@@ -80,7 +80,10 @@ function Task(props){
                 </ul>
             </div>
             <TaskModal
+            mode={'edit'}
             show={show}
+            lists={props.lists}
+            listId={props.task.list ? props.task.list.id : null}
             handleShow={handleShow}
             title={title}
             handleTitleChange={handleTitleChange}
@@ -97,6 +100,7 @@ function Task(props){
 
 
 const mapStateToProps = state => ({
+    //listItems: state.tasks.lists
     //tasks: state.main.tasks,
     //loading: state.main.loading
 })

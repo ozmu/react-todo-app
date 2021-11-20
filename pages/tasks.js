@@ -5,12 +5,13 @@ import TaskModal from '../components/utils/TaskModal';
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
 import { getListTasks, addTask } from '../store/actions/tasks';
+import { getLists } from '../store/actions/list';
 
 const Tasks = (props) => {
   const router = useRouter();
   const listId = router.query.listId;
 
-  const { tasks, loading } = props;
+  const { tasks, loading, listItems } = props;
 
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -42,6 +43,7 @@ const Tasks = (props) => {
   useEffect(() => {
     if (listId != undefined){
       props.getListTasks(listId);
+      props.getLists();
     }
   }, [listId]);
 
@@ -74,13 +76,16 @@ const Tasks = (props) => {
                   <div className="nk-tb-col tb-col-lg"><span className="sub-text">Deadline</span></div>
                   <div className="nk-tb-col tb-col-md"><span className="sub-text">Actions</span></div>
               </div>
-              {loading ? <Loading/> : tasks.map((task, idx) => <Task key={idx} task={task}/>)}
+              {loading ? <Loading/> : tasks.map((task, idx) => <Task key={idx} lists={listItems} task={task}/>)}
             </div>
           </div>
         </div>
       </div>
       <TaskModal
+      mode={'create'}
       show={show}
+      lists={listItems}
+      listId={null}
       handleShow={handleShow}
       title={title}
       handleTitleChange={handleTitleChange}
@@ -96,11 +101,12 @@ const Tasks = (props) => {
 }
 
 const mapStateToProps = state => ({
-    tasks: state.tasks.tasks
+    tasks: state.tasks.tasks,
+    listItems: state.lists.items
 })
 
 const mapDispatchToProps = {
-    getListTasks, addTask
+    getListTasks, addTask, getLists
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks);
