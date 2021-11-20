@@ -5,7 +5,7 @@ import Loading from '../components/utils/Loading';
 import ListItem from '../components/ListItem';
 
 function Home(props) {
-  const { loading, count, tasks, listItems } = props;
+  const { loading, listItems } = props;
 
   useEffect(() => {
     props.getTasks();
@@ -35,8 +35,6 @@ function Home(props) {
 
 const mapStateToProps = state => ({
   loading: state.tasks.loading,
-  count: state.tasks.count,
-  tasks: state.tasks.tasks,
   listItems: state.tasks.lists
 })
 
