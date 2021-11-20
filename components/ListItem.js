@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { computeAvatar } from '../utils/abbreviations';
 
 const List = props => {
     return (
@@ -9,7 +10,7 @@ const List = props => {
                     <div className="project-head">
                         <a href="/demo2/apps-kanban.html" className="project-title">
                             <div className="user-avatar sq" style={{backgroundColor: '#' + props.item.color}}>
-                                <span>DD</span>
+                                <span>{computeAvatar(props.item.title)}</span>
                             </div>
                             <div className="project-info">
                                 <h6 className="title">{props.item.title}</h6>
