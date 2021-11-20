@@ -18,7 +18,7 @@ function Home(props) {
           <div className="nk-block-head nk-block-head-sm">
             <div className="nk-block-head-content">
               <h3 className="nk-block-title fw-normal">Task Lists</h3>
-              <div className="nk-block-des text-soft"><p>You have total {count} lists.</p></div>
+              <div className="nk-block-des text-soft"><p>You have total {listItems.length} lists.</p></div>
             </div>
           </div>
           <div className="nk-block">

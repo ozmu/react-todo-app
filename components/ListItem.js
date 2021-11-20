@@ -25,7 +25,9 @@ const List = props => {
                         </a>
                     </div>
                     <div className="project-details">
-                        <p>Design and develop the DashLite template for Envato Marketplace.</p>
+                        <p>{props.item.id 
+                        ? `Example description to ${props.item.title} list. Click link for see tasks.`
+                        : 'You have 2 ungrouped tasks.'}</p>
                     </div>
                     <div className="project-progress">
                         <div className="project-progress-details">
