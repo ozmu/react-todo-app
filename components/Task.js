@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 import Modal from '../components/utils/Modal';
-import { changeTaskStatus, updateTask, deleteTask } from '../store/actions/main';
+import { changeTaskStatus, updateTask, deleteTask } from '../store/actions/tasks';
 
 function Task(props){
     const [show, setShow] = useState(false);

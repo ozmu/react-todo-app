@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import Modal from '../components/utils/Modal';
 import Loading from '../components/utils/Loading';
 import Task from '../components/Task';
-import { getTasks, addTask } from '../store/actions/main';
+import { getListTasks, addTask } from '../store/actions/tasks';
 
 const Tasks = (props) => {
+  const router = useRouter();
+  const listId = router.query.listId;
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,28 +29,27 @@ const Tasks = (props) => {
     handleClose();
   }
 
-
   useEffect(() => {
-    props.getTasks();
-  }, []);
+    if (listId != undefined){
+      props.getListTasks(listId);
+    }
+  }, [listId]);
 
   return (
         <>
             <div className="container">
-                içerik
+                {props.tasks.map((task, idx) => <Task key={idx} task={task}/>)}
             </div>
         </>
   )
 }
 
-
 const mapStateToProps = state => ({
-    tasks: state.main.tasks,
-    loading: state.main.loading
+    tasks: state.tasks.tasks
 })
 
 const mapDispatchToProps = {
-    getTasks, addTask
+    getListTasks, addTask
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

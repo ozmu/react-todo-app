@@ -41,6 +41,11 @@ const main = (state = {
             })
             console.log('s: ', s)
             return s;
+        case t.SET_LIST_TASKS:
+            return {
+                ...state,
+                tasks: action.payload
+            }
         case t.ADD_TASK:
             return {
                 ...state,

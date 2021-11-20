@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from 'react-redux';
 import { getTasks } from '../store/actions/tasks';
 import Loading from '../components/utils/Loading';

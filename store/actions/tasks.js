@@ -16,6 +16,18 @@ export const getTasks = () => dispatch => {
     })
 }
 
+export const getListTasks = (listId) => dispatch => {
+    axios.get(url + `tasks${listId === 'unknown' ? '' : ('?listId=' + listId)}`).then(response => {
+        if (response.status === 200){
+            let payload = response.data.results;
+            if (listId === 'unknown'){
+                payload = payload.filter(task => task.list === null);
+            }
+            dispatch({ type: t.SET_LIST_TASKS, payload });
+        }
+    })
+}
+
 export const addTask = (task) => dispatch => {
     axios.post(url + 'tasks', task).then(response => {
         if (response.status === 201){
