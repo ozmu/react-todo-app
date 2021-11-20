@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { computeAvatar } from '../utils/abbreviations';
+import { calculatePercentage } from '../utils/calculations';
 
 const List = props => {
     return (
@@ -28,14 +29,14 @@ const List = props => {
                     </div>
                     <div className="project-progress">
                         <div className="project-progress-details">
-                        <div className="project-progress-task">
-                            <em className="icon ni ni-check-round-cut"></em>
-                            <span>{props.item.taskCount} Tasks</span>
-                        </div>
-                        <div className="project-progress-percent">93.5%</div>
+                            <div className="project-progress-task">
+                                <em className="icon ni ni-check-round-cut"></em>
+                                <span>{props.item.taskCount} Tasks</span>
+                            </div>
+                            <div className="project-progress-percent">{calculatePercentage(props.item.completedCount, props.item.taskCount)}%</div>
                         </div>
                         <div className="progress progress-pill progress-md bg-light">
-                        <div className="progress-bar" data-progress="93.5" ></div>
+                        <div className="progress-bar" data-progress="93.5" style={{width: calculatePercentage(props.item.completedCount, props.item.taskCount) + '%'}}></div>
                         </div>
                     </div>
                 </div>

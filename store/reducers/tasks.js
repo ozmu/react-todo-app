@@ -16,11 +16,16 @@ const main = (state = {
             }
             list.forEach(item => {
                 if (item != null){
-                    s.lists.push(item);
+                    s.lists.push({
+                        ...item,
+                        taskCount: action.payload.filter(task => task.list && (task.list.id === item.id)).length,
+                        completedCount: action.payload.filter(task => task.list && (task.list.id === item.id) && task.isCompleted).length,
+                    });
                 }
                 else {
                     let unknownList = s.lists.find(list => list.id == null);
                     if (unknownList){
+                        unknownList.completedCount = action.payload.filter(task => task.list === null && task.isCompleted).length;
                         unknownList.taskCount++;
                     }
                     else {
@@ -28,6 +33,7 @@ const main = (state = {
                             id: null,
                             title: 'Unknown List',
                             createdAt: new Date(),
+                            completedCount: 0,
                             taskCount: 0
                         });
                     }
