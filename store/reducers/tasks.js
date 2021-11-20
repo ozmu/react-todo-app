@@ -8,19 +8,28 @@ const main = (state = {
 }, action) => {
     switch (action.type) {
         case t.SET_TASKS:
-            const list = action.payload.map(task => task.list);
+            const tasks = action.payload;
             let s = {
                 ...state,
-                tasks: action.payload,
+                tasks,
                 lists: []
             }
-            list.forEach(item => {
+            tasks.forEach(task => {
+                let item = task.list;
                 if (item != null){
-                    s.lists.push({
-                        ...item,
-                        taskCount: action.payload.filter(task => task.list && (task.list.id === item.id)).length,
-                        completedCount: action.payload.filter(task => task.list && (task.list.id === item.id) && task.isCompleted).length,
-                    });
+                    let filteredItem = s.lists.filter(list => list.id == item.id);
+                    if (filteredItem.length){
+                        item = filteredItem[0];
+                        item.taskCount++;
+                        item.completedCount += task.isCompleted ? 1 : 0;
+                    }
+                    else {
+                        s.lists.push({
+                            ...item,
+                            taskCount: 1,
+                            completedCount: task.isCompleted ? 1 : 0
+                        });
+                    }
                 }
                 else {
                     let unknownList = s.lists.find(list => list.id == null);
@@ -33,13 +42,12 @@ const main = (state = {
                             id: null,
                             title: 'Unknown List',
                             createdAt: new Date(),
-                            completedCount: 0,
-                            taskCount: 0
+                            completedCount: task.isCompleted ? 1 : 0,
+                            taskCount: 1
                         });
                     }
                 }
             })
-            console.log('s: ', s)
             return s;
         case t.SET_LIST_TASKS:
             return {

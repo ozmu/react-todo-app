@@ -28,9 +28,7 @@ const List = props => {
                         </Link>
                     </div>
                     <div className="project-details">
-                        <p>{props.item.id 
-                        ? `Example description to ${props.item.title} list. Click link for see tasks.`
-                        : 'You have 2 ungrouped tasks.'}</p>
+                        <p>Example description to <strong>{props.item.title}</strong> list. Click link for see tasks.</p>
                     </div>
                     <div className="project-progress">
                         <div className="project-progress-details">
