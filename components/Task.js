@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
 import { useState } from 'react';
+import moment from 'moment';
 
-import Modal from '../components/utils/Modal';
+import Modal from './utils/TaskModal';
 import { changeTaskStatus, updateTask, deleteTask } from '../store/actions/tasks';
 
 function Task(props){
@@ -38,63 +38,45 @@ function Task(props){
     }
 
     return (
-        <>
-            <div className="card">
-                <h3>{props.task.title}</h3>
-                <p>{props.task.details}</p>
-                <div className="card-action">
-                    <Button variant="info" onClick={handleIsCompletedChange}>{isCompleted ? 'incomplete' : 'complete'}</Button>
-                    <Button variant="info" onClick={handleShow}>Edit</Button>
-                    <Button variant="danger" onClick={handleDeleteTask}>Delete</Button>
-                    <Modal
-                    show={show}
-                    handleShow={handleShow}
-                    title={title}
-                    handleTitleChange={handleTitleChange}
-                    details={details}
-                    handleDetailsChange={handleDetailsChange}
-                    date={date}
-                    handleDateChange={handleDateChange}
-                    handleClose={handleClose}
-                    submit={updateTask}
-                    ></Modal>
-                </div>
+        <div className="nk-tb-item">
+            <div className="nk-tb-col">
+                <span className="tb-amount">{props.task.title}</span>
             </div>
-            <style jsx>
-                {`
-
-            .card {
-                margin: 1rem;
-                flex-basis: 100%;
-                padding: 1.5rem;
-                text-align: left;
-                color: inherit;
-                text-decoration: none;
-                border: 1px solid #eaeaea;
-                border-radius: 10px;
-                transition: color 0.15s ease, border-color 0.15s ease;
-            }
-    
-            .card:hover,
-            .card:focus,
-            .card:active {
-                color: #0070f3;
-                border-color: #0070f3;
-            }
-    
-            .card h3 {
-                margin: 0 0 1rem 0;
-                font-size: 1.5rem;
-            }
-    
-            .card p {
-                margin: 0;
-                font-size: 1.25rem;
-                line-height: 1.5;
-            }
-                `}
-            </style>
-        </>
+            <div className="nk-tb-col tb-col-mb">
+                <span>{props.task.details}</span>
+            </div>
+            <div className="nk-tb-col tb-col-md">
+                <span>{moment(props.task.createdAt).format('MMMM Do YYYY, hh:mm:ss a')}</span>
+            </div>
+            <div className="nk-tb-col tb-col-lg">
+                <span className={'tb-status text-' + (props.task.isCompleted ? 'success' : 'danger')}>{props.task.isCompleted ? 'Completed' : 'Incompleted'}</span>
+            </div>
+            <div className="nk-tb-col tb-col-lg">
+                <span className="badge badge-dim badge-warning">
+                    <em className="icon ni ni-clock"></em>
+                    <span title={props.task.due}>{moment(props.task.due).fromNow()}</span>
+                </span>
+            </div>
+            <div className="nk-tb-col nk-tb-col-tools">
+                <ul className="nk-tb-actions gx-1">
+                    <li className="nk-tb-action-hidden">
+                        <button className="btn btn-trigger btn-icon" title={`Mark ${props.task.isCompleted ? 'Incompleted': 'Completed'}`} onClick={handleIsCompletedChange}>
+                            <em className={`icon ni ni-${props.task.isCompleted ? 'cross' : 'check'}-circle-fill`}></em>
+                        </button>
+                    </li>
+                    <li className="nk-tb-action-hidden">
+                        <button className="btn btn-trigger btn-icon" title="Edit" onClick={handleShow}>
+                            <em className="icon ni ni-edit-fill"></em>
+                        </button>
+                    </li>
+                    <li className="nk-tb-action-hidden">
+                        <button className="btn btn-trigger btn-icon" title="Delete" onClick={handleDeleteTask}>
+                            <em className="icon ni ni-trash-fill"></em>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }
 
