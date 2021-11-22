@@ -1,5 +1,5 @@
 import * as t from '../types';
-import axios from '../../middlewares/axios.middleware'
+import axios from '../../lib/axios.middleware'
 
 const url = process.env.CRUDFUL_URL;
 
